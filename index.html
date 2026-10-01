@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>InternFit: ATS resume score and internship matching for students</title>
+<title>InternFit: ATS score, internship matches, roadmap and AI coach</title>
 <meta name="description" content="Get your ATS resume score, see why you lost points, and find internships that match your skills.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8E%AF%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -71,15 +71,47 @@ textarea{min-height:230px;resize:vertical}
 .badge.warn{background:var(--sun)}.badge.bad{background:var(--coral)}
 footer{border-top:2px solid var(--ink);margin-top:40px;padding:28px 0;color:var(--mut);font-size:.95rem}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+nav .wrap{gap:10px}nav .lk{display:flex;gap:2px;flex-wrap:wrap;align-items:center}
+nav a.t2{font-weight:700;color:var(--ink);text-decoration:none;padding:4px 10px;border-radius:9px}nav a.t2:hover{background:#fff}
+@media (max-width:720px){nav .hide{display:none}}
+.fl{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.fl button{font:700 .9rem "DM Sans",system-ui,sans-serif;border:2px solid var(--ink);border-radius:99px;padding:4px 14px;background:#fff;color:var(--ink);cursor:pointer}
+.fl button.on{background:var(--ink);color:#fff}
+.meta{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+.tag{font-size:.8rem;font-weight:700;border:2px solid var(--ink);border-radius:8px;padding:0 8px;background:#fff}
+.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+button.chip{cursor:pointer;font-family:inherit;color:var(--ink)}
+dialog{margin:auto;width:min(680px,calc(100vw - 24px));max-height:92vh;overflow:auto;border:2px solid var(--ink);border-radius:20px;box-shadow:9px 9px 0 var(--ink);padding:24px;background:#fff;color:var(--ink)}
+dialog::backdrop{background:rgba(18,18,43,.55)}
+dialog form{margin-top:14px;text-align:right}
+#fab{position:fixed;right:18px;bottom:18px;z-index:30;background:var(--ink);color:#fff;border-radius:99px;padding:14px 24px}
+#chat{position:fixed;right:18px;bottom:82px;z-index:30;width:min(400px,calc(100vw - 36px));height:min(580px,calc(100vh - 110px));display:none;flex-direction:column;background:#fff;border:2px solid var(--ink);border-radius:20px;box-shadow:9px 9px 0 var(--ink);overflow:hidden}
+#chat.open{display:flex}
+.ch{background:var(--blue);color:#fff;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.ch b{font:800 1.15rem "Bricolage Grotesque",system-ui,sans-serif}
+.ch button{background:none;border:0;color:#fff;font-size:1.5rem;line-height:1;cursor:pointer}
+#cm{font-size:.8rem;background:var(--mint);color:var(--ink);border-radius:99px;padding:0 10px;font-weight:700}
+#msgs{flex:1;overflow:auto;padding:14px;display:flex;flex-direction:column;gap:10px;background:var(--bg)}
+.m{max-width:90%;padding:10px 14px;border:2px solid var(--ink);border-radius:14px;font-size:.95rem;line-height:1.5;white-space:pre-wrap}
+.m.u{align-self:flex-end;background:var(--sun)}.m.a{align-self:flex-start;background:#fff}
+.m .acts{margin-top:10px;white-space:normal}
+#qs{display:flex;gap:6px;overflow-x:auto;padding:8px 12px;border-top:2px solid var(--ink);background:#fff}
+#qs button{flex:none;font:700 .8rem "DM Sans",system-ui,sans-serif;border:2px solid var(--ink);border-radius:99px;padding:3px 12px;background:#e6e6ff;color:var(--ink);cursor:pointer}
+#cf{display:flex;gap:8px;padding:10px;border-top:2px solid var(--ink);background:#fff}
+#cf input,#ep{flex:1;min-width:0;font:inherit;color:var(--ink);border:2px solid var(--ink);border-radius:10px;padding:8px 12px;background:#fff}
+#cf button{padding:8px 16px;box-shadow:3px 3px 0 var(--ink)}
+#cs{padding:6px 14px 10px;background:#fff;font-size:.85rem;border-top:2px dashed rgba(18,18,43,.25)}
+#cs summary{cursor:pointer;font-weight:700}
+#cs .row{margin-top:8px;flex-wrap:nowrap}
 </style>
 </head>
 <body>
-<nav><div class="wrap"><a class="logo" href="#top">InternFit</a><a class="btn sm" href="#analyze">Check my resume</a></div></nav>
+<nav><div class="wrap"><a class="logo" href="#top">InternFit</a><div class="lk"><a class="t2 hide" href="#matches">Internships</a><a class="t2 hide" href="#roadmap">Roadmap</a><a class="t2 hide" href="#tracker">Tracker</a><a class="btn sm" href="#analyze">Check my resume</a></div></div></nav>
 
 <header class="wrap hero" id="top">
 <div>
 <h1>Stop applying everywhere. Apply where you fit.</h1>
-<p>Upload your resume. See your ATS score, exactly why points were lost, and the internships that match the skills you already have.</p>
+<p>Upload your resume. Get your ATS score, the internships that fit you, a 10-week roadmap, and Fitty, an AI coach that helps you apply.</p>
 <a class="btn" href="#analyze">Score my resume</a>
 </div>
 <div class="stk" aria-hidden="true">
@@ -118,7 +150,20 @@ footer{border-top:2px solid var(--ink);margin-top:40px;padding:28px 0;color:var(
 <div id="out" aria-live="polite"></div>
 </section>
 
-<footer><div class="wrap">InternFit runs fully in your browser, so your resume stays on your device. Internship roles shown are sample role profiles, not live job listings.</div></footer>
+<section class="wrap" id="matches"><h2 class="sec">Internships for you</h2><p class="mut" id="mh" style="margin-bottom:16px"></p><div class="fl" id="fl"></div><div class="grid" id="ops"></div></section>
+<section class="wrap" id="roadmap"><h2 class="sec">Your 10-week roadmap</h2><div id="road"></div></section>
+<section class="wrap" id="tracker"><h2 class="sec">Your applications</h2><div class="card" id="trk"></div></section>
+<dialog id="kit" aria-label="Application kit"><div id="kb"></div><form method="dialog"><button class="btn alt sm">Close</button></form></dialog>
+<button id="fab" class="btn" type="button" aria-expanded="false" aria-controls="chat">Ask Fitty</button>
+<aside id="chat" aria-label="Fitty, your AI internship coach">
+<div class="ch"><b>Fitty</b><span id="cm"></span><button id="cx" type="button" aria-label="Close chat">&times;</button></div>
+<div id="msgs" role="log" aria-live="polite"></div>
+<div id="qs"><button type="button">Why is my score low?</button><button type="button">Best internships for me</button><button type="button">My roadmap</button><button type="button">Mock interview</button><button type="button" data-q="Improve this bullet: worked on bug fixes in the team repository">Improve a bullet</button></div>
+<form id="cf"><input id="ci" type="text" placeholder="Ask about your resume or a company" aria-label="Message Fitty" autocomplete="off"><button class="btn" type="submit">Send</button></form>
+<details id="cs"><summary>AI settings</summary><div class="row"><input id="ep" type="url" placeholder="https://your-worker.workers.dev" aria-label="AI server URL"><button class="btn alt sm" id="es" type="button">Save</button></div><p id="et" class="sm mut" role="status" style="margin-top:6px"></p></details>
+</aside>
+
+<footer><div class="wrap">Your resume is analysed in your browser and saved only on this device. If you connect the AI server, your chat messages and a summary of your results are sent to it. Listings here are samples; use "Find live openings" for real ones.</div></footer>
 
 <script>
 const $=s=>document.querySelector(s),st=m=>$('#st').textContent=m;
@@ -228,9 +273,175 @@ $('#sample').onclick=()=>{$('#txt').value=SAMPLE;st('Sample loaded. Press "Analy
 $('#go').onclick=()=>{
  const raw=$('#txt').value.trim();
  if(raw.split(/\s+/).length<30){st('Please paste or upload a fuller resume (at least 30 words).');return}
- st('');render(analyze(raw,$('#field').value));
+ st('');LAST=analyze(raw,$('#field').value);render(LAST);afterAnalyze();
  $('#out').scrollIntoView({behavior:'smooth'});
 };
+/* ===== InternFit v2: opportunities, apply kit, roadmap, tracker, Fitty AI coach ===== */
+const AI_ENDPOINT=''; // Paste your Cloudflare Worker URL here to turn on the real LLM (see README)
+let LAST=null,FILT='All';
+const store={get(k,d){try{const v=localStorage.getItem('if_'+k);return v===null?d:JSON.parse(v)}catch(_){return d}},set(k,v){try{localStorage.setItem('if_'+k,JSON.stringify(v))}catch(_){}}};
+const H=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const chp=(a,c)=>a.map(x=>`<span class="chip ${c}">${H(x)}</span>`).join('');
+const go=s=>document.querySelector(s).scrollIntoView({behavior:'smooth'});
+const hasAI=()=>!!(store.get('ep','')||AI_ENDPOINT);
+
+// Sample listings. Edit this list to add your own. Real openings: use the "Find live openings" buttons.
+const LIST=`Frontend Developer Intern|Pixelhive Studio|Hyderabad|Hybrid|₹15k/mo|3 months
+Frontend Developer Intern|Nimbus Labs|Anywhere|Remote|₹12k/mo|2 months
+Full-Stack Developer Intern|Orbit Pay|Bengaluru|On-site|₹20k/mo|6 months
+Data Analyst Intern|Lumen Retail|Anywhere|Remote|₹10k/mo|3 months
+Data Analyst Intern|Kiteline Analytics|Pune|Hybrid|₹14k/mo|3 months
+Machine Learning Intern|Verve AI Works|Bengaluru|Hybrid|₹25k/mo|6 months
+Software Engineer Intern|Gridstack|Hyderabad|On-site|₹30k/mo|6 months
+Backend Developer Intern|Cartwheel|Anywhere|Remote|₹18k/mo|4 months
+Cloud and DevOps Intern|Cumulus Systems|Chennai|Hybrid|₹16k/mo|3 months
+UI/UX Design Intern|Palette Co|Mumbai|Hybrid|₹12k/mo|3 months
+Graphic Design Intern|Brightloop|Anywhere|Remote|₹8k/mo|2 months
+Digital Marketing Intern|Growthnest|Anywhere|Remote|₹8k/mo|3 months
+Content Writing Intern|Inkwell Media|Anywhere|Remote|₹6k/mo|2 months
+Security Analyst Intern|Bastion Cyber|Bengaluru|On-site|₹18k/mo|4 months`.split('\n').map((l,i)=>{const[t,co,city,mode,pay,dur]=l.split('|'),j=JOBS.find(x=>x.t===t);return{id:'o'+i,t,co,city,mode,pay,dur,f:j.f,s:j.s}});
+const found=()=>new Set(LAST?LAST.found:[]);
+const pct=o=>LAST?Math.round(o.s.filter(s=>found().has(s)).length/o.s.length*100):null;
+const liveUrl=o=>'https://www.linkedin.com/jobs/search/?f_E=1&keywords='+encodeURIComponent(o.t);
+
+// ---------- Board ----------
+function board(){
+ const fs=['All','Remote',...new Set(LIST.map(o=>F[o.f][0]))];
+ $('#fl').innerHTML=fs.map(f=>`<button type="button" class="${f===FILT?'on':''}" data-f="${H(f)}">${H(f)}</button>`).join('');
+ $('#mh').textContent=LAST?'Sorted by how well your resume matches each role.':'Analyze your resume above and these roles will sort by your match.';
+ const L=LIST.filter(o=>FILT==='All'||(FILT==='Remote'?o.mode==='Remote':F[o.f][0]===FILT)).map(o=>({o,p:pct(o)})).sort((a,b)=>(b.p??0)-(a.p??0));
+ $('#ops').innerHTML=L.map(({o,p})=>{const tn=tone((p||0)/100),miss=o.s.filter(s=>!found().has(s));
+  return`<div class="card"><div class="jh"><h3>${H(o.t)}</h3>${p===null?'':`<span class="badge ${tn}">${p}%</span>`}</div><p class="mut sm">${H(o.co)}</p><div class="meta"><span class="tag">${H(o.city)}</span><span class="tag">${H(o.mode)}</span><span class="tag">${H(o.pay)}</span><span class="tag">${H(o.dur)}</span></div>${p===null?chp(o.s,''):`<div class="t"><i class="${tn}" style="width:${p}%"></i></div>${miss.length?'<p class="sm mut" style="margin-top:8px">Missing:</p>'+chp(miss,'miss'):'<p class="sm" style="margin-top:8px"><b>You have every required skill.</b></p>'}`}<div class="acts"><button class="btn sm" type="button" data-a="${o.id}">Apply kit</button><button class="btn alt sm" type="button" data-q="${o.id}">Ask Fitty</button></div></div>`}).join('')||'<p>No roles in this filter.</p>';
+}
+$('#fl').onclick=e=>{const b=e.target.closest('[data-f]');if(b){FILT=b.dataset.f;board()}};
+$('#ops').onclick=e=>{
+ const a=e.target.closest('[data-a]'),q=e.target.closest('[data-q]');
+ if(a)kit(a.dataset.a);
+ if(q){const o=LIST.find(x=>x.id===q.dataset.q);openChat();send(`How well do I fit the ${o.t} role at ${o.co}, and what should I do next?`)}
+};
+
+// ---------- Apply kit ----------
+function who(){const l=($('#txt').value.trim().split('\n')[0]||'').trim();return l.length&&l.length<40&&!/[@\d]/.test(l)?l:'[Your name]'}
+function letter(o){
+ const f=found(),hit=o.s.filter(s=>f.has(s)),miss=o.s.filter(s=>!f.has(s));
+ const proof=($('#txt').value.split('\n').find(l=>/\d/.test(l)&&VERBS.some(v=>new RegExp('\\b'+v+'\\b','i').test(l)))||'').trim().replace(/\.$/,'');
+ return `Dear ${o.co} hiring team,\n\nI am applying for the ${o.t} role. ${hit.length?`My strongest skills for this role are ${hit.join(', ')}.`:'I am a fast learner building the core skills for this role.'}${proof?` For example: ${proof}.`:''}\n\n${miss.length?`I am currently learning ${miss.join(' and ')} through hands-on projects so I can contribute quickly. `:'I can start contributing from week one. '}I would value the chance to discuss how I can help your team during a ${o.dur} internship.\n\nThank you for your time.\n${who()}`;
+}
+function kit(id){
+ const o=LIST.find(x=>x.id===id),p=pct(o),f=found(),hit=o.s.filter(s=>f.has(s)),miss=o.s.filter(s=>!f.has(s));
+ $('#kb').innerHTML=`<h3>${H(o.t)} at ${H(o.co)}</h3><p class="mut sm">${H(o.city)}, ${H(o.mode)}, ${H(o.pay)}, ${H(o.dur)}. Sample listing.</p>
+ ${p===null?'<p style="margin-top:10px"><b>Analyze your resume first</b> to get a match score and a letter that uses your real skills.</p>':`<p style="margin-top:10px"><b>${p}% match.</b> ${p>=70?'Strong fit. Apply now.':p>=40?'Close. Add the missing skills to your resume, then apply.':'Upskill first. Core skills are missing.'}</p>${hit.length?'<p class="sm" style="margin-top:8px"><b>Lead with these skills:</b></p>'+chp(hit,'ok'):''}${miss.length?'<p class="sm" style="margin-top:8px"><b>Gaps to close:</b></p>'+chp(miss,'miss'):''}`}
+ <label for="cl">Cover letter (edit freely)</label><textarea id="cl" style="min-height:210px">${H(letter(o))}</textarea>
+ <div class="row"><button class="btn sm" type="button" id="cp">Copy letter</button><button class="btn sm" type="button" id="sv">Save to tracker</button><a class="btn alt sm" target="_blank" rel="noopener" href="${liveUrl(o)}">Find live openings</a><button class="btn alt sm" type="button" id="pl">Polish with AI</button></div><p id="ks" class="sm" role="status" style="margin-top:10px"></p>`;
+ const ks=m=>{$('#ks').textContent=m};
+ $('#cp').onclick=()=>{const t=$('#cl').value;(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>ks('Copied.'),()=>{$('#cl').select();ks('Press Ctrl+C to copy the selected text.')})};
+ $('#sv').onclick=()=>{if(!APPS.some(a=>a.id===o.id)){APPS.push({id:o.id,t:o.t,co:o.co,s:'Saved'});store.set('apps',APPS);tracker()}ks('Saved. Update its status in "Your applications".')};
+ $('#pl').onclick=()=>{
+  if(!hasAI()){ks('Polish needs the AI connection. See the README, step "Turn on the real AI".');return}
+  $('#kit').close();openChat();send(`Polish this cover letter for the ${o.t} role at ${o.co}. Keep it under 150 words and keep it honest:\n\n${$('#cl').value}`)};
+ $('#kit').showModal();
+}
+
+// ---------- Roadmap ----------
+const ROAD={web:['https://roadmap.sh/frontend','Build a portfolio site, then a small app with an API and a login.','Frontend Intern, Junior Developer, Full-Stack Developer, Senior Engineer'],
+data:['https://roadmap.sh/ai-data-scientist','Clean a public dataset and publish an analysis with three charts.','Data Analyst Intern, Data Analyst, Data Scientist, ML Engineer'],
+soft:['https://roadmap.sh/backend','Solve 60 data-structure problems and ship a REST service with tests.','Software Intern, Software Engineer, Senior Engineer, Tech Lead'],
+design:['https://roadmap.sh/ux-design','Redesign one real app flow and write a one-page case study.','Design Intern, Product Designer, Senior Designer, Design Lead'],
+mkt:['https://skillshop.withgoogle.com/','Run a small campaign for a local business and report the numbers.','Marketing Intern, Marketing Executive, Growth Manager, Head of Growth'],
+sec:['https://roadmap.sh/cyber-security','Finish a beginner capture-the-flag set and write up each solution.','Security Intern, SOC Analyst, Security Engineer, Security Lead']};
+function plan(){
+ const fld=$('#field').value,m=LAST.miss,r=ROAD[fld],top=LIST.filter(o=>o.f===fld).slice(0,2).map(o=>o.co).join(' and ');
+ return{fld,r,P:[
+  ['Weeks 1 to 3','Close the biggest gaps',m.length?`Learn ${m.slice(0,2).join(' and ')}. Do one small exercise per skill and commit each to GitHub.`:'You cover every core skill. Pick one and build something harder than a tutorial.'],
+  ['Weeks 4 to 6','Build proof',`${m.slice(2,4).length?'Learn '+m.slice(2,4).join(' and ')+'. ':''}Project: ${r[1]}`],
+  ['Weeks 7 to 10','Ship and apply',`Apply your resume upgrade plan, then apply to roles like those at ${top}. Practise 5 interview questions a week with Fitty.`]]};
+}
+function road(){
+ if(!LAST){$('#road').innerHTML='<div class="card"><p>Analyze your resume first. Your roadmap is built from the skills you have and the ones you still need.</p></div>';return}
+ const{fld,r,P}=plan();
+ $('#road').innerHTML=`<div class="grid">${P.map((p,i)=>`<div class="card c${i+1}"><p class="sm mut"><b>${p[0]}</b></p><h3>${p[1]}</h3><p>${H(p[2])}</p></div>`).join('')}</div><div class="card" style="margin-top:22px"><h3>Where this can lead</h3><p>${H(r[2])}</p><div class="row"><a class="btn alt sm" target="_blank" rel="noopener" href="${r[0]}">Open a free learning path</a><button class="btn sm" type="button" id="rq">Ask Fitty to adjust my plan</button></div></div>`;
+ $('#rq').onclick=()=>{openChat();send('I have 5 hours a week. How should I adjust my roadmap?')};
+}
+
+// ---------- Tracker ----------
+let APPS=store.get('apps',[]);const ST=['Saved','Applied','Interview','Offer','Rejected'];
+function tracker(){
+ $('#trk').innerHTML=APPS.length?APPS.map((a,i)=>`<div class="item" style="align-items:center;flex-wrap:wrap"><div class="grow"><b>${H(a.t)}</b><br><span class="mut sm">${H(a.co)}</span></div><select data-i="${i}" aria-label="Status for ${H(a.t)}" style="width:auto">${ST.map(s=>`<option${s===a.s?' selected':''}>${s}</option>`).join('')}</select><button class="btn alt sm" type="button" data-d="${i}">Remove</button></div>`).join(''):'<p class="mut">Nothing saved yet. Open an Apply kit and press "Save to tracker".</p>';
+}
+$('#trk').onchange=e=>{const i=e.target.dataset.i;if(i!==undefined){APPS[i].s=e.target.value;store.set('apps',APPS)}};
+$('#trk').onclick=e=>{const d=e.target.closest('[data-d]');if(d){APPS.splice(+d.dataset.d,1);store.set('apps',APPS);tracker()}};
+
+// ---------- Fitty: AI coach ----------
+const CH=[];
+const QS={web:['What is the difference between let, const and var?','How do you make a page work on phones?','Walk me through a project you built. What broke and how did you fix it?'],data:['How would you handle missing values in a dataset?','What is the difference between precision and recall?','Explain a SQL JOIN with an example.'],soft:['How does a hash map work?','Explain Big-O with an example.','Tell me about a bug you debugged.'],design:['Walk me through your design process.','How do you decide what to cut from a screen?','How would you test a design with five users?'],mkt:['How would you grow a new brand on a zero budget?','Which metrics matter most for a campaign, and why?','Show me a post you wrote and explain your choices.'],sec:['What happens when you type a URL into a browser?','Explain the difference between hashing and encryption.','How would you check a website for common vulnerabilities?']};
+function improve(b){
+ let x=b.trim().replace(/^[-•*]\s*/,'');
+ for(const[r,v]of[[/^responsible for\s+/i,'Managed '],[/^worked on\s+/i,'Built '],[/^helped (with|in)\s+/i,'Supported '],[/^duties included\s+/i,'Handled ']])if(r.test(x)){x=x.replace(r,v);break}
+ x=x.charAt(0).toUpperCase()+x.slice(1);
+ const tips=[];
+ if(!VERBS.some(v=>new RegExp('^'+v+'\\b','i').test(x)))tips.push('start with a strong verb such as Built, Automated or Led');
+ if(!/\d/.test(x)){tips.push('add a number (users, % faster, hours saved)');x=x.replace(/\.$/,'')+', [result: number]'}
+ return `Try this:\n${x}${tips.length?'\n\nStill to do: '+tips.join('; ')+'.':'\n\nThis one is already strong.'}`;
+}
+function local(q){
+ const s=q.toLowerCase(),need=()=>({t:'I need your resume first. Run the analysis and I can answer with your real skills and gaps.',a:[['Go to resume check',()=>{closeChat();go('#analyze')}]]});
+ const o=LIST.find(x=>s.includes(x.co.toLowerCase()))||(/cover|letter/.test(s)&&LIST.find(x=>s.includes(x.t.toLowerCase().replace(' intern',''))));
+ if(/^(hi|hello|hey|yo)\b/.test(s))return{t:`Hi, I'm Fitty. I read your resume results and your internship matches. Ask me about your score, matches, roadmap, a cover letter, or practise interview questions.`};
+ const im=q.match(/(?:improve|rewrite|fix)[^:]*:\s*([\s\S]+)/i);if(im)return{t:improve(im[1])};
+ if(o&&/cover|letter|apply|kit/.test(s)){kit(o.id);return{t:`I opened the apply kit for ${o.t} at ${o.co}.`}}
+ if(o){if(!LAST)return need();const p=pct(o),miss=o.s.filter(x=>!found().has(x));return{t:`${o.t} at ${o.co}: ${p}% match. ${miss.length?`Missing ${miss.join(', ')}. Learn those first, add them to your resume, then apply.`:'You have every required skill, so apply now.'}`,a:[['Open apply kit',()=>kit(o.id)]]}}
+ if(/interview|mock|question/.test(s)){const f=$('#field').value;return{t:`Practise out loud, using the STAR method (situation, task, action, result):\n\n1. Tell me about yourself in 60 seconds.\n${QS[f].map((x,i)=>`${i+2}. ${x}`).join('\n')}\n\n${hasAI()?'Type your answer to any of these and I will give feedback.':'Connect the AI (see README) and I will give feedback on your answers.'}`}}
+ if(/road|plan|path|learn|next step|study/.test(s)){if(!LAST)return need();const{P}=plan();return{t:P.map(p=>`${p[0]}: ${p[2]}`).join('\n\n'),a:[['See full roadmap',()=>{closeChat();go('#roadmap')}]]}}
+ if(/why|score|low|ats|weak|resume/.test(s)){if(!LAST)return need();const low=LAST.cats.filter(c=>c.g/c.m<.75).sort((a,b)=>(b.m-b.g)-(a.m-a.g));return{t:`Your ATS score is ${LAST.score}/100. ${low.length?'Biggest losses:\n'+low.slice(0,3).map(c=>`- ${c.n} (-${c.m-c.g}): ${c.fix}`).join('\n'):'No major issues found.'}`}}
+ if(/match|internship|fit|best|opportunit|apply|job|role/.test(s)){if(!LAST)return need();const t=LIST.map(o=>({o,p:pct(o)})).sort((a,b)=>b.p-a.p).slice(0,3);return{t:'Your top matches right now:\n'+t.map(x=>`- ${x.o.t} at ${x.o.co}: ${x.p}%`).join('\n'),a:t.map(x=>['Apply kit: '+x.o.co,()=>kit(x.o.id)])}}
+ if(/track|status|applied|saved/.test(s)){const c=ST.map(k=>k+' '+APPS.filter(a=>a.s===k).length).join(', ');return{t:APPS.length?`Your applications: ${c}.`:'You have not saved any applications yet. Open an apply kit and save one.',a:[['Open tracker',()=>{closeChat();go('#tracker')}]]}}
+ const sk=RX.find(x=>x[1].test(q));
+ if(sk){const roles=LIST.filter(o=>o.s.includes(sk[0])).map(o=>o.t);return{t:`${sk[0]} appears in ${roles.length} role types${roles.length?', for example '+[...new Set(roles)].slice(0,3).join(', '):''}. Prove it with one small project, then list it under Skills and in a project bullet with a result.`}}
+ return{t:'I can help with your score, internship matches, roadmap, cover letters, bullet rewrites and interview practice. Try one of the buttons below.'};
+}
+function ctx(){return LAST?{field:F[$('#field').value][0],score:LAST.score,bestFitField:LAST.best[0],skillsFound:LAST.found,skillsMissing:LAST.miss,problems:LAST.cats.filter(c=>c.g/c.m<.75).map(c=>c.n+': '+c.why),topMatches:LIST.map(o=>({role:o.t,company:o.co,match:pct(o)})).sort((a,b)=>b.match-a.match).slice(0,5),applications:APPS.map(a=>`${a.t} at ${a.co} (${a.s})`)}:null}
+async function ask(q){
+ CH.push({role:'user',content:q});
+ const url=store.get('ep','')||AI_ENDPOINT;
+ if(url){
+  try{const r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:CH.slice(-10),context:ctx()})});
+   const j=await r.json();if(!r.ok||!j.reply)throw 0;CH.push({role:'assistant',content:j.reply});return{t:j.reply}}
+  catch(_){const a=local(q);CH.push({role:'assistant',content:a.t});return{t:a.t+'\n\n(The AI server did not respond, so this answer came from the built-in coach.)',a:a.a}}
+ }
+ const a=local(q);CH.push({role:'assistant',content:a.t});return a;
+}
+function say(t,w,acts){
+ const d=document.createElement('div');d.className='m '+w;d.textContent=t;
+ if(acts&&acts.length){const x=document.createElement('div');x.className='acts';acts.forEach(([l,f])=>{const b=document.createElement('button');b.className='chip';b.type='button';b.textContent=l;b.onclick=f;x.appendChild(b)});d.appendChild(x)}
+ $('#msgs').appendChild(d);d.scrollIntoView({block:'end'});return d;
+}
+let busy=false;
+async function send(q){
+ q=q.trim();if(!q||busy)return;busy=true;say(q,'u');$('#ci').value='';
+ const tp=say('Thinking...','a');
+ try{const a=await ask(q);tp.remove();say(a.t,'a',a.a)}catch(_){tp.remove();say('Something went wrong. Please try again.','a')}
+ busy=false;
+}
+function openChat(){$('#chat').classList.add('open');$('#fab').setAttribute('aria-expanded','true');$('#ci').focus({preventScroll:true})}
+function closeChat(){$('#chat').classList.remove('open');$('#fab').setAttribute('aria-expanded','false')}
+function mode(){$('#cm').textContent=hasAI()?'Connected AI':'Built-in coach';$('#ep').value=store.get('ep','')}
+$('#fab').onclick=()=>$('#chat').classList.contains('open')?closeChat():openChat();
+$('#cx').onclick=closeChat;
+$('#cf').onsubmit=e=>{e.preventDefault();send($('#ci').value)};
+$('#qs').onclick=e=>{const b=e.target.closest('button');if(b)send(b.dataset.q||b.textContent)};
+$('#es').onclick=()=>{const v=$('#ep').value.trim();if(v&&!/^https:\/\//.test(v)){$('#et').textContent='The URL must start with https://';return}store.set('ep',v);mode();$('#et').textContent=v?'Saved. Fitty now uses your AI server.':'Cleared. Fitty uses the built-in coach.'};
+mode();
+say(`Hi, I'm Fitty, your internship coach. Analyze your resume and I'll explain your score, pick roles for you and plan your next 10 weeks.`,'a');
+
+// ---------- Wiring ----------
+function afterAnalyze(){
+ store.set('resume',$('#txt').value);board();road();
+ const low=LAST.cats.filter(c=>c.g/c.m<.75).length,top=LIST.map(o=>({o,p:pct(o)})).sort((a,b)=>b.p-a.p)[0];
+ say(`Your ATS score is ${LAST.score}/100 with ${low} area${low==1?'':'s'} to improve. Your best match is ${top.o.t} at ${top.o.co} (${top.p}%). Ask me why you lost points, or what to do next.`,'a');
+}
+$('#txt').addEventListener('input',()=>store.set('resume',$('#txt').value));
+$('#txt').value=store.get('resume','');
+board();road();tracker();
 </script>
 </body>
 </html>
