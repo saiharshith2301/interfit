@@ -1,33 +1,151 @@
-# InternFit
+# InternFit v3 — Powered by ChintuAI 🤖
 
-ATS resume score, internship matches, a 10-week roadmap, an application tracker and Fitty, an AI coach.
+A complete redesign of your internship platform with **real AI**, **live job listings**, **beautiful reports**, and **persistent conversation memory**.
 
-## Files
-- `index.html` - the whole website (CSS and JavaScript are inside it, so styles can never fail to load)
-- `worker.js` - optional AI backend (Cloudflare Worker). Not uploaded to GitHub Pages; you paste it into Cloudflare
-- `.nojekyll` - tells GitHub Pages to serve files as they are
+---
 
-## Publish the website (GitHub Pages)
-1. Extract the zip. GitHub does not unzip for you.
-2. On github.com click + (top right), New repository. Name it `internfit`, set Public, tick "Add a README file", Create.
-3. Add file, Upload files. Drag in `index.html`, `.nojekyll` and `README.md` (the files, not the folder). Commit changes.
-4. Settings, Pages. Source: Deploy from a branch. Branch: main, folder: / (root). Save.
-5. Wait 1 to 2 minutes. Your site is at `https://YOUR-USERNAME.github.io/internfit/`.
-6. If it looks old, hard refresh with Ctrl+Shift+R.
+## What's new in v3
 
-## Turn on the real AI (optional, about 5 minutes)
-Without this, Fitty uses a built-in rule-based coach that still works. With it, Fitty is a real LLM that knows the student's score, skills and matches.
-1. Get an Anthropic API key at console.anthropic.com. Usage is billed to you, so set a spending limit.
-2. Sign up at cloudflare.com. Go to Workers & Pages, Create, Create Worker, name it `internfit-ai`, Deploy.
-3. Click Edit code, delete the sample code, paste all of `worker.js`, Deploy.
-4. Open the Worker's Settings, Variables and Secrets. Add a Secret named `ANTHROPIC_API_KEY` with your key. Add a Text variable `ALLOWED_ORIGIN` = `https://YOUR-USERNAME.github.io` so only your site can use it. Deploy.
-5. Copy the Worker URL (`https://internfit-ai.YOUR-NAME.workers.dev`).
-6. Easiest for all visitors: open `index.html`, find `const AI_ENDPOINT=''` near the top of the script, paste the URL between the quotes, and commit. Or, for testing, paste it in Fitty's "AI settings" box on the site.
+| Feature | v2 | v3 |
+|---|---|---|
+| AI name | Fitty | **ChintuAI** |
+| Chat UI | Small corner popup | Full-screen panel with history |
+| AI engine | Claude Haiku | **Claude Sonnet** (much smarter) |
+| ATS analysis | Rule-based only | **AI-powered deep analysis** |
+| Job listings | Static samples | **Live from Remotive API** |
+| Career paths | Generic message | **Visual career timelines** |
+| Reports | Boring bars | **Animated, beautiful, specific** |
+| Data storage | Basic localStorage | **Full session persistence** |
+| Voice input | ❌ | **✅ Built-in (Chrome/Edge)** |
+| Conversation memory | Single session | **Multiple saved conversations** |
 
-Never put your API key in `index.html`. Anyone could read it.
+---
 
-## Add real internships
-Listings are samples. Edit the `LIST` table in `index.html` (one line per listing: role|company|city|mode|stipend|duration). The role name must match one of the 12 role names in `JOBS`. "Find live openings" opens a real LinkedIn search for that role.
+## Quick Start
 
-## Privacy
-The resume is analysed in the browser and saved in this device's localStorage. With the AI connected, chat messages and a summary of results (score, skills, matches) are sent to your Worker and the AI provider. The full resume text is not sent.
+### Option A — No backend (Built-in mode)
+Just open `index.html` in a browser. You get:
+- ✅ Resume analysis (rule-based scorer)
+- ✅ Live job listings (Remotive API)
+- ✅ Career path visualizations
+- ✅ Roadmap and tracker
+- ✅ Basic ChintuAI (built-in responses)
+
+### Option B — Full AI mode (Recommended)
+Deploy the Cloudflare Worker to unlock deep AI analysis and smart conversations.
+
+---
+
+## Deploying ChintuAI (Cloudflare Worker)
+
+### Step 1: Create a Cloudflare Worker
+1. Go to [dash.cloudflare.com](https://dash.cloudflare.com)
+2. Click **Workers & Pages** → **Create Application** → **Create Worker**
+3. Paste the contents of `worker.js`
+4. Click **Deploy**
+
+### Step 2: Add your API key
+1. In the Worker dashboard, go to **Settings** → **Variables and Secrets**
+2. Add a **Secret** named `ANTHROPIC_API_KEY` with your key from [console.anthropic.com](https://console.anthropic.com)
+3. Optional: Add `MODEL` variable = `claude-sonnet-4-6` (default)
+4. Optional: Add `ALLOWED_ORIGIN` = your GitHub Pages URL for security
+
+### Step 3: Connect in the app
+1. Open `index.html`
+2. In the **Check your resume** section, paste your Worker URL (e.g. `https://chintuai.your-username.workers.dev`)
+3. Click **Connect**
+4. You'll see "✓ Connected to ChintuAI"
+
+---
+
+## Hosting on GitHub Pages
+
+1. Create a new GitHub repo
+2. Upload `index.html` (and optionally `.nojekyll`)
+3. Go to **Settings** → **Pages** → Source: **main branch**
+4. Your site will be live at `https://username.github.io/repo-name`
+
+---
+
+## ChintuAI can answer questions like:
+
+- "Why is my ATS score low?"
+- "Which internship should I apply to?"
+- "Create a 6-week study plan for me"
+- "Help me prepare for my interview at Zoho"
+- "Write a cover letter for the ML intern role"
+- "Explain React hooks like I'm a beginner"
+- "What skills am I missing for a data science role?"
+- "Improve this bullet: worked on bug fixes"
+- "What should I focus on this week?"
+- "Can you remember what we discussed about my resume?"
+
+---
+
+## Architecture
+
+```
+User Browser
+  ↓
+index.html (frontend)
+  ├── Local ATS engine (always works)
+  ├── Remotive API (live jobs)
+  ├── localStorage (resume, history, tracker)
+  └── ChintuAI Worker (optional, recommended)
+         ↓
+    Cloudflare Worker
+         ↓
+    Anthropic Claude API
+         ↓
+    Streaming response
+```
+
+---
+
+## Worker endpoints
+
+| Method | Path | What it does |
+|---|---|---|
+| GET | `/health` | Check connection status |
+| GET | `/jobs?field=web` | Proxy live job listings |
+| POST | `/analyze` | AI-powered ATS analysis |
+| POST | `/career` | Personalized career advice |
+| POST | `/` | Main ChintuAI chat |
+
+---
+
+## Environment variables
+
+| Name | Required | Default | Description |
+|---|---|---|---|
+| `ANTHROPIC_API_KEY` | ✅ Yes | — | Your Anthropic API key |
+| `MODEL` | No | `claude-sonnet-4-6` | Claude model to use |
+| `ALLOWED_ORIGIN` | No | `*` | Restrict CORS to your domain |
+
+---
+
+## Data privacy
+
+- Your resume text is analyzed **locally in the browser** by the built-in scorer
+- When ChintuAI is connected, your resume summary and chat messages go to **your own Cloudflare Worker** — not to us
+- Conversations are stored in **your browser's localStorage** only
+- No accounts, no tracking, no data collected by InternFit
+
+---
+
+## Troubleshooting
+
+**"AI server did not respond"**
+→ Check your Worker URL. Test it at `https://your-worker.workers.dev/health`
+
+**"ANTHROPIC_API_KEY is not set"**  
+→ Add the secret in Cloudflare Worker settings → Variables and Secrets
+
+**Jobs not loading**
+→ Remotive API may be temporarily unavailable. Curated sample listings will show instead.
+
+**Voice not working**
+→ Voice input requires Chrome or Edge. Make sure microphone permission is granted.
+
+**Resume not auto-loading**
+→ Browser might have cleared localStorage. Paste your resume again and it will be remembered.
